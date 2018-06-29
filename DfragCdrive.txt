@@ -1,0 +1,28 @@
+@echo off
+rem -----------------------------------------------------------------------------------------------------
+rem - 			LogMeIn One2Many Sample Scripts
+rem - 			Defrag the C Volume with full reporting
+rem -
+rem - 		This template script can be used to execute the appropriate command for the  
+rem -	 	appropriate version of windows. 
+rem - 
+rem -		Script last updated in September 2010.  Will require updating with new releases
+rem -		of Windows.
+rem -----------------------------------------------------------------------------------------------------
+
+
+
+rem -----------------------------------------------------------------------------------------------------
+rem -  Modify commands below for the appropriate operating system
+rem -----------------------------------------------------------------------------------------------------
+
+
+defrag c: -v
+
+
+rem -----------------------------------------------------------------------------------------------------
+rem -				Copyright (C) 2003-2010 LogMeIn, Inc. US patents pending.		-
+rem -			This script can be re-distributed for demonstration purposes only.		-
+rem -		Use of this script is subject to general Logmein Terms and Conditions found here:	-
+rem -				https://secure.logmein.com/termsandconditions.asp			-
+rem -----------------------------------------------------------------------------------------------------

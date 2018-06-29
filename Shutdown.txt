@@ -1,0 +1,83 @@
+@echo off
+rem -----------------------------------------------------------------------------------------------------
+rem - 			LogMeIn One2Many Sample Scripts
+rem - 			Template which determines OS Type
+rem -
+rem - 		This template script can be used to execute the appropriate command for the  
+rem -	 	appropriate version of windows.  The original code came from the site:
+rem -		http://community.spiceworks.com/scripts/show/52-windows-version
+rem - 
+rem -		Script last updated in September 2010.  Will require updating with new releases
+rem -		of Windows.
+rem -----------------------------------------------------------------------------------------------------
+
+echo Starting DOS Script.  Detecting Version of Windows
+
+ver>"%temp%\ver.tmp"
+
+find /i "5.0" "%temp%\ver.tmp" > nul
+if %ERRORLEVEL% == 0 goto ver_2000
+
+find /i "5.1" "%temp%\ver.tmp" > nul
+if %ERRORLEVEL% == 0 goto ver_xp
+
+find /i "5.2" "%temp%\ver.tmp" > nul
+if %ERRORLEVEL% == 0 goto ver_2003
+
+find /i "6.0" "%temp%\ver.tmp" > nul
+if %ERRORLEVEL% == 0 goto ver_2008/Vista
+
+find /i "6.1" "%temp%\ver.tmp" > nul
+if %ERRORLEVEL% == 0 goto ver_7
+
+if"%WinVersion%" == "" goto warnthenexit
+
+rem -----------------------------------------------------------------------------------------------------
+rem -  Modify commands below for the appropriate operating system
+rem -----------------------------------------------------------------------------------------------------
+
+:ver_7
+:Run Windows 7 specific commands here.
+echo Windows 7 Detected by script
+shutdown -s -t 01
+goto exit
+
+
+:ver_2008/vista
+:Run Windows Vista specific commands here.
+echo Windows Vista Detected by script
+shutdown -s -t 01
+goto exit
+
+:ver_2003
+:Run Windows Server 2003 specific commands here.
+echo Windows Server 2003 Detected by script
+shutdown /s /t 01
+goto exit
+
+:ver_xp
+:Run Windows XP specific commands here.
+echo Windows XP Detected by script
+shutdown -s -t 01
+goto exit
+
+:ver_2000
+:Run Windows 2000 specific commands here.
+echo Windows 2000 Detected by script
+shutdown -s -t 01
+goto exit
+
+
+
+:warnthenexit
+echo ERROR:  Windows version NOT detected! Perhaps this script needs updating.  Exiting now!
+
+:exit
+echo DOS Script Exiting!
+
+rem -----------------------------------------------------------------------------------------------------
+rem -				Copyright (C) 2003-2010 LogMeIn, Inc. US patents pending.		-
+rem -			This script can be re-distributed for demonstration purposes only.		-
+rem -		Use of this script is subject to general Logmein Terms and Conditions found here:	-
+rem -				https://secure.logmein.com/termsandconditions.asp			-
+rem -----------------------------------------------------------------------------------------------------

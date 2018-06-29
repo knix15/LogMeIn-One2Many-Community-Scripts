@@ -1,0 +1,38 @@
+@echo off
+rem -----------------------------------------------------------------------------------------------------
+rem - 			LogMeIn One2Many Sample Scripts
+rem - 			Update LogMeIn
+rem - 		This task will return success when the update starts, not when the update successfully finishes –      
+rem -		you need the bottom portion of the script to determine the results.
+rem - 		Also, this task assumes that LMI is allowed to automatically download updates but
+rem - 		will not automatically apply them, which is the default.
+rem -		Script last updated in November 2010.  It May require updating with new releases
+rem -		To run Save As .bat file
+rem -----------------------------------------------------------------------------------------------------
+@echo off
+REM This script will update LogMeIn. This is tricky because 
+REM a script will stop running when LMI shuts down.
+cd %TEMP%
+if %PROCESSOR_ARCHITECTURE% equ AMD64 goto amd64
+echo cd "%ProgramFiles%\logmein\x86\update" > lmiupdate.cmd
+goto x86done
+:amd64
+echo cd "%ProgramFiles(x86)%\logmein\x64\update" > lmiupdate.cmd
+:x86done
+echo raupdate.exe /s >> lmiupdate.cmd
+echo exit >> lmiupdate.cmd
+REM Now that we built a batch file we kick it off asynchronously
+REM so the LMI service can stop without terminating it.
+start lmiupdate.cmd
+
+REM Getting the result of the above:
+ 
+@echo off
+if %PROCESSOR_ARCHITECTURE% equ AMD64 goto amd64
+cd "%ProgramFiles%\logmein\x86\update"
+goto x86done
+:amd64
+cd "%ProgramFiles(x86)%\logmein\x64\update"
+:x86done
+type logmein.log
+ 

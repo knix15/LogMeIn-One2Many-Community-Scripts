@@ -1,0 +1,117 @@
+
+@echo off
+rem -----------------------------------------------------------------------------------------------------
+rem - 			Logmein Rescue Sample Scripts
+rem - 			Template which determines OS Type
+rem -
+rem - 		This template script can be used to execute the appropriate command for the  
+rem -	 	appropriate version of windows.  The original code came from the site:
+rem -		http://malektips.com/xp_dos_0025.html
+rem - 
+rem -		Script last updated in August 2010.  Will require updating with new releases
+rem -		of windows.
+rem -----------------------------------------------------------------------------------------------------
+
+echo Starting DOS Script.  Detecting Version of Windows
+
+ver | find "2003" > nul
+if %ERRORLEVEL% == 0 goto ver_2003
+
+ver | find "XP" > nul
+if %ERRORLEVEL% == 0 goto ver_xp
+
+ver | find "2000" > nul
+if %ERRORLEVEL% == 0 goto ver_2000
+
+ver | find "NT" > nul
+if %ERRORLEVEL% == 0 goto ver_nt
+
+if not exist %SystemRoot%\system32\systeminfo.exe goto warnthenexit
+
+systeminfo | find "OS Name" > %TEMP%\osname.txt
+FOR /F "usebackq delims=: tokens=2" %%i IN (%TEMP%\osname.txt) DO set vers=%%i
+
+echo %vers% | find "Windows 7" > nul
+if %ERRORLEVEL% == 0 goto ver_7
+
+echo %vers% | find "Windows Server 2008" > nul
+if %ERRORLEVEL% == 0 goto ver_2008
+
+echo %vers% | find "Windows Vista" > nul
+if %ERRORLEVEL% == 0 goto ver_vista
+
+goto warnthenexit
+
+rem -----------------------------------------------------------------------------------------------------
+rem -  Modify commands below for the appropriate operating system
+rem -----------------------------------------------------------------------------------------------------
+
+:ver_7
+:Run Windows 7 specific commands here.
+echo Windows 7 Detected by script
+msiexec.exe /passive /i aviconvert.msi
+echo Installation started, please wait...
+ping 127.0.0.1 -n 2 -w 1000 > nul
+echo Installation complete. Please verify the application is running fine on the remote workstation.
+cd "C:\Program Files\LogMeIn Rescue AVI Converter"
+start aviconverter.exe
+goto exit
+
+:ver_2008
+:Run Windows Server 2008 specific commands here.
+echo Windows Server 2008 Detected by script
+echo No scripting logic available for this Windows Version
+goto exit
+
+:ver_vista
+:Run Windows Vista specific commands here.
+echo Windows Vista Detected by script
+msiexec.exe /passive /i aviconvert.msi
+echo Installation started, please wait...
+ping 127.0.0.1 -n 2 -w 1000 > nul
+echo Installation complete. Please verify the application is running fine on the remote workstation.
+cd "C:\Program Files\LogMeIn Rescue AVI Converter"
+start aviconverter.exe
+goto exit
+
+:ver_2003
+:Run Windows Server 2003 specific commands here.
+echo Windows Server 2003 Detected by script
+echo No scripting logic available for this Windows Version
+goto exit
+
+:ver_xp
+:Run Windows XP specific commands here.
+echo Windows XP Detected by script
+msiexec.exe /passive /i aviconvert.msi
+echo Installation started, please wait...
+ping 127.0.0.1 -n 2 -w 1000 > nul
+echo Installation complete. Please verify the application is running fine on the remote workstation.
+cd "C:\Program Files\LogMeIn Rescue AVI Converter"
+start aviconverter.exe
+goto exit
+
+:ver_2000
+:Run Windows 2000 specific commands here.
+echo Windows 2000 Detected by script
+echo No scripting logic available for this Windows Version
+goto exit
+
+:ver_nt
+:Run Windows NT specific commands here.
+echo Windows NT Detected by script
+echo No scripting logic available for this Windows Version
+goto exit
+
+:warnthenexit
+echo ERROR:  Windows version NOT detected! Perhaps this script needs updating.  Exiting now!
+
+:exit
+echo DOS Script Exiting!
+
+rem -----------------------------------------------------------------------------------------------------
+rem -				Copyright (C) 2003-2010 LogMeIn, Inc. US patents pending.		-
+rem -			This script can be re-distributed for demonstration purposes only.		-
+rem -		Use of this script is subject to general Logmein Terms and Conditions found here:	-
+rem -				https://secure.logmein.com/termsandconditions.asp			-
+rem -----------------------------------------------------------------------------------------------------
